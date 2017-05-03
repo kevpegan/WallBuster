@@ -204,7 +204,8 @@ public class PlayerPhysics : MonoBehaviour
 
             mIsTouchingPlayer = true;
             pa.otherPlayer = _other.gameObject;
-            ApplyImpulse(pushDir * -mActualVelocity.magnitude * 2);
+            ApplyImpulse(pushDir * -mActualVelocity.magnitude * 1.2f);
+            _other.gameObject.GetComponent<PlayerPhysics>().ApplyImpulse(pushDir * mActualVelocity.magnitude * 1.2f);
         }
     }
 

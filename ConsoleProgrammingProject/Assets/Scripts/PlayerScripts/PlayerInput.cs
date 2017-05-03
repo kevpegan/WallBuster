@@ -78,16 +78,14 @@ public class PlayerInput : MonoBehaviour
         Vector2 moveDirection = Vector2.zero;
 
         //get movement in the X
-        if (Mathf.Abs(inputState.ThumbSticks.Left.X) >= mAnalogDeadZone)
-        {
-            moveDirectionX = inputState.ThumbSticks.Left.X;
-        }
+       
+        moveDirectionX = inputState.ThumbSticks.Left.X;
+        
 
         //get movement in the Y
-        if (Mathf.Abs(inputState.ThumbSticks.Left.Y) >= mAnalogDeadZone)
-        {
-            moveDirectionY = inputState.ThumbSticks.Left.Y;
-        }
+        
+        moveDirectionY = inputState.ThumbSticks.Left.Y;
+        
 
         moveDirection = new Vector2(moveDirectionX, moveDirectionY);
 

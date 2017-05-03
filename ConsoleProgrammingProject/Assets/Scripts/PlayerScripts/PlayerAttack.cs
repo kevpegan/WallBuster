@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
     Vector2 mPos;
     Rigidbody2D rb;
     public BoxCollider2D bc;
+    public GameObject box;
 
     PlayerPhysics pp;
     PlayerInput   pi;
@@ -19,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackVal;
 
     public float attackCD;
-    public float currAttackCD;
+    public float currAttackCD = 1.5f;
     public bool  attackOnCD;
 
     public GameObject otherPlayer;
@@ -56,8 +57,7 @@ public class PlayerAttack : MonoBehaviour
         float x = pi.mRawAim.x;
         float y = pi.mRawAim.y;
 
-        if (x != 0 && y!= 0)
-        {
+            box.GetComponent<Renderer>().enabled = true;
             Vector2 center = pp.mPlayerPosition;
             float radius = mAttackOrbitVal;
             float angle = 0;
@@ -88,11 +88,6 @@ public class PlayerAttack : MonoBehaviour
             float newY = center.y + (radius * Mathf.Sin(angle * Mathf.PI / 180));
             Vector2 newPos = new Vector2(newX, newY);
             bc.transform.position = newPos;
-        }
-        else
-        {
-
-        }
      
     }
 
