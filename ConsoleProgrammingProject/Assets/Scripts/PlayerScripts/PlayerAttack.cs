@@ -55,36 +55,45 @@ public class PlayerAttack : MonoBehaviour
     {
         float x = pi.mRawAim.x;
         float y = pi.mRawAim.y;
-        Vector2 center = pp.mPlayerPosition;
-        float radius = mAttackOrbitVal;
-        float angle = 0;
 
-        if (x != 0)
+        if (x != 0 && y!= 0)
         {
-            float radian = Mathf.Atan(y / x);
-            angle = radian * (180 / Mathf.PI);
-            if(x < 0)
-            {
-                angle += 180;
-            }
-            else if (x > 0 && y < 0)
-            {
-                angle += 360;
-            }
-        }
-        else if (x == 0 && y > 0)
-        {
-            angle = 90;
-        }
-        else if (x == 0 && y < 0)
-        {
-            angle = 270;
-        }
+            Vector2 center = pp.mPlayerPosition;
+            float radius = mAttackOrbitVal;
+            float angle = 0;
 
-        float newX = center.x + ( radius * Mathf.Cos(angle * Mathf.PI / 180) );
-        float newY = center.y + ( radius  * Mathf.Sin(angle * Mathf.PI / 180) );
-        Vector2 newPos = new Vector2(newX, newY);
-        bc.transform.position = newPos;
+            if (x != 0)
+            {
+                float radian = Mathf.Atan(y / x);
+                angle = radian * (180 / Mathf.PI);
+                if (x < 0)
+                {
+                    angle += 180;
+                }
+                else if (x > 0 && y < 0)
+                {
+                    angle += 360;
+                }
+            }
+            else if (x == 0 && y > 0)
+            {
+                angle = 90;
+            }
+            else if (x == 0 && y < 0)
+            {
+                angle = 270;
+            }
+
+            float newX = center.x + (radius * Mathf.Cos(angle * Mathf.PI / 180));
+            float newY = center.y + (radius * Mathf.Sin(angle * Mathf.PI / 180));
+            Vector2 newPos = new Vector2(newX, newY);
+            bc.transform.position = newPos;
+        }
+        else
+        {
+
+        }
+     
     }
 
     void CooldownAttack()
@@ -108,19 +117,21 @@ public class PlayerAttack : MonoBehaviour
     {
         attack.x = pi.mRawAim.x;
         attack.y = pi.mRawAim.y;
-        
 
-
-
-        if (pp.mIsTouchingPlayer)
+        if(!attackOnCD)
         {
-            if (otherPlayer != null)
+            if (pp.mIsTouchingPlayer)
             {
+                if (otherPlayer != null)
+                {
 
-                attack *= attackMag;
-                otherPlayer.GetComponent<PlayerPhysics>().ApplyImpulse(attack * otherPlayer.GetComponent<PlayerAttack>().playerDamage);
-                otherPlayer.GetComponent<PlayerAttack>().ApplyDamage(attackVal);
+                    attack *= attackMag;
+                    otherPlayer.GetComponent<PlayerPhysics>().ApplyImpulse(attack * otherPlayer.GetComponent<PlayerAttack>().playerDamage);
+                    otherPlayer.GetComponent<PlayerAttack>().ApplyDamage(attackVal);
+                    attackOnCD = true;
+                    currAttackCD = 0;
+                }
             }
-        }
+        }       
     }
 }
